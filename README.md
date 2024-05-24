@@ -46,5 +46,10 @@ No modules.
 
 ### Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_extra_role_policies"></a> [extra_role_policies](#output_extra_role_policies) | The tenant extra role policy names |
+| <a name="output_extra_roles"></a> [extra_roles](#output_extra_roles) | The tenant extra approle roles |
+| <a name="output_tenant_admin_policy"></a> [tenant_admin_policy](#output_tenant_admin_policy) | The tenant admin policy name |
+| <a name="output_tenant_admin_role"></a> [tenant_admin_role](#output_tenant_admin_role) | The tenant admin approle role |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
