@@ -13,7 +13,7 @@ resource "vault_approle_auth_backend_role_secret_id" "tenant_admin" {
 }
 
 resource "vault_identity_entity" "tenant_admin" {
-  name = "${each.value.prefix}-admin"
+  name = "${var.tenant_prefix}-admin"
   metadata = {
     tenant = var.tenant_name
     prefix = var.tenant_prefix
