@@ -20,7 +20,7 @@ variable "tenant_prefix" {
 
 variable "tenant_admin_policy_file" {
   type        = string
-  default     = "./policies/tenant-admins.policy.hcl"
+  default     = null
   description = "The path to the admin policy file for this tenant"
 }
 
