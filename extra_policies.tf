@@ -1,10 +1,3 @@
-resource "vault_policy" "extra_policies" {
-  for_each = var.tenant_additional_roles
-
-  name   = "${var.tenant_prefix}-${each.key}"
-  policy = file(each.value.policy_file)
-}
-
 resource "vault_auth_backend" "approle" {
   type = "approle"
   path = "${var.tenant_prefix}-approle"
@@ -40,4 +33,11 @@ resource "vault_identity_entity" "extra_roles" {
     tenant = var.tenant_name
     prefix = var.tenant_prefix
   }
+}
+
+resource "vault_policy" "extra_policies" {
+  for_each = var.tenant_additional_roles
+
+  name   = "${var.tenant_prefix}-${each.key}"
+  policy = file(each.value.policy_file)
 }
