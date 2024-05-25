@@ -7,8 +7,8 @@ path "sys/mounts/{{identity.entity.metadata.prefix}}/*" {
 }
 
 path "auth/token/create" {
-  capabilities = ["create", "update", "delete"]
+  capabilities = ["create", "update", "sudo"]
   allowed_parameters = {
-    policies = ["${tenant_name}-admin"]
+    policies = [["${tenant_name}-admin"]]
   }
 }
