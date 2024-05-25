@@ -1,7 +1,11 @@
+locals {
+  tenant_admin_policies = ["default", "${var.tenant_name}-admin"]
+}
+
 resource "vault_approle_auth_backend_role" "tenant_admin" {
   backend        = var.global_approle_mount
   role_name      = "${var.tenant_name}-admin"
-  token_policies = ["default", "${vault_policy.tenant_admin.name}"]
+  token_policies = local.tenant_admin_policies
 }
 
 resource "random_uuid" "tenant_admin_secret_id" {}
@@ -22,5 +26,5 @@ resource "vault_identity_entity" "tenant_admin" {
 
 resource "vault_policy" "tenant_admin" {
   name   = "${var.tenant_name}-admin"
-  policy = var.tenant_admin_policy_file == null ? templatefile("${path.module}/policies/tenant-admins.policy.hcl", { tenant_prefix = var.tenant_prefix, admin_policies = vault_approle_auth_backend_role.tenant_admin.token_policies }) : file(var.tenant_admin_policy_file)
+  policy = var.tenant_admin_policy_file == null ? templatefile("${path.module}/policies/tenant-admins.policy.hcl", { tenant_prefix = var.tenant_prefix, admin_policies = local.tenant_admin_policies }) : file(var.tenant_admin_policy_file)
 }
