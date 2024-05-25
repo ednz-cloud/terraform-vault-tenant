@@ -26,5 +26,5 @@ resource "vault_identity_entity" "tenant_admin" {
 
 resource "vault_policy" "tenant_admin" {
   name   = "${var.tenant_name}-admin"
-  policy = var.tenant_admin_policy_file == null ? templatefile("${path.module}/policies/tenant-admins.policy.hcl", { tenant_prefix = var.tenant_prefix, admin_policies = local.tenant_admin_policies }) : file(var.tenant_admin_policy_file)
+  policy = var.tenant_admin_policy_file == null ? templatefile("${path.module}/policies/tenant-admins.policy.hcl", { tenant_prefix = var.tenant_prefix }) : file(var.tenant_admin_policy_file)
 }
