@@ -1,10 +1,4 @@
-variable "global_approle_mount" {
-  type        = string
-  default     = "approle"
-  description = "The mount path for the global AppRole authentication method"
-}
-
-variable "tenant_name" {
+variable "name" {
   type        = string
   description = "The name of the tenant you want to create"
   validation {
@@ -13,18 +7,18 @@ variable "tenant_name" {
   }
 }
 
-variable "tenant_prefix" {
+variable "prefix" {
   type        = string
   description = "The prefix to use for the tenant in vault (this will prefix mount points, policies, etc..)"
 }
 
-variable "tenant_admin_policy_file" {
+variable "root_policy_file" {
   type        = string
   default     = null
   description = "The path to the admin policy file for this tenant"
 }
 
-variable "tenant_additional_roles" {
+variable "additional_roles" {
   type = map(object({
     policy_file = string
   }))
@@ -33,7 +27,7 @@ variable "tenant_additional_roles" {
     A map of additional role names, with the path to the associated policy file to add for this tenant.
     A separate approle auth method is created for this tenant (mounted at auth/<prefix>-approle) including all the roles declared in this variable.
     The variable should look like:
-    tenant_additional_roles = {
+    additional_roles = {
       devs = {
         policy_file = "/some/path/to/policy.hcl"
       }

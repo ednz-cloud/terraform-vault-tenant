@@ -1,21 +1,28 @@
-output "tenant_admin_role" {
+output "approle_mount" {
+  value       = vault_auth_backend.approle
+  sensitive   = true
+  description = "The approle mount for the tenant"
+}
+
+
+output "root_role" {
   value = {
-    role_id   = vault_approle_auth_backend_role.tenant_admin.role_name
-    secret_id = vault_approle_auth_backend_role_secret_id.tenant_admin.secret_id
+    role_id   = vault_approle_auth_backend_role.root.role_name
+    secret_id = vault_approle_auth_backend_role_secret_id.root.secret_id
   }
   sensitive   = true
-  description = "The tenant admin approle role"
+  description = "The tenant root approle role"
   depends_on = [
-    vault_approle_auth_backend_role.tenant_admin,
-    vault_approle_auth_backend_role_secret_id.tenant_admin
+    vault_approle_auth_backend_role.root,
+    vault_approle_auth_backend_role_secret_id.root
   ]
 }
 
-output "tenant_admin_policy" {
-  value       = vault_policy.tenant_admin.name
+output "root_policy" {
+  value       = vault_policy.root.name
   sensitive   = false
-  description = "The tenant admin policy name"
-  depends_on  = [vault_policy.tenant_admin]
+  description = "The tenant root policy name"
+  depends_on  = [vault_policy.root]
 }
 
 output "extra_roles" {

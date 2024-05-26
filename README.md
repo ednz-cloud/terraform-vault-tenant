@@ -30,37 +30,37 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [random_uuid.extra_roles_secret_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
-| [random_uuid.tenant_admin_secret_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
-| [vault_approle_auth_backend_role.extra_roles](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role) | resource |
-| [vault_approle_auth_backend_role.tenant_admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role) | resource |
-| [vault_approle_auth_backend_role_secret_id.extra_roles](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role_secret_id) | resource |
-| [vault_approle_auth_backend_role_secret_id.tenant_admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role_secret_id) | resource |
+| [random_uuid.extra_secret_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
+| [random_uuid.root_secret_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
+| [vault_approle_auth_backend_role.extra](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role) | resource |
+| [vault_approle_auth_backend_role.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role) | resource |
+| [vault_approle_auth_backend_role_secret_id.extra](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role_secret_id) | resource |
+| [vault_approle_auth_backend_role_secret_id.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role_secret_id) | resource |
 | [vault_auth_backend.approle](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/auth_backend) | resource |
-| [vault_identity_entity.admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity) | resource |
 | [vault_identity_entity.extra](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity) | resource |
-| [vault_identity_entity_alias.admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity_alias) | resource |
+| [vault_identity_entity.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity) | resource |
 | [vault_identity_entity_alias.extra](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity_alias) | resource |
+| [vault_identity_entity_alias.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity_alias) | resource |
 | [vault_identity_group.this](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_group) | resource |
-| [vault_policy.extra_policies](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
-| [vault_policy.tenant_admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
+| [vault_policy.extra](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
+| [vault_policy.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_global_approle_mount"></a> [global_approle_mount](#input_global_approle_mount) | The mount path for the global AppRole authentication method | `string` | `"approle"` | no |
-| <a name="input_tenant_additional_roles"></a> [tenant_additional_roles](#input_tenant_additional_roles) | A map of additional role names, with the path to the associated policy file to add for this tenant.<br>    A separate approle auth method is created for this tenant (mounted at auth/<prefix>-approle) including all the roles declared in this variable.<br>    The variable should look like:<br>    tenant_additional_roles = {<br>      devs = {<br>        policy_file = "/some/path/to/policy.hcl"<br>      }<br>      admins = {...}<br>    } | <pre>map(object({<br>    policy_file = string<br>  }))</pre> | `{}` | no |
-| <a name="input_tenant_admin_policy_file"></a> [tenant_admin_policy_file](#input_tenant_admin_policy_file) | The path to the admin policy file for this tenant | `string` | `null` | no |
-| <a name="input_tenant_name"></a> [tenant_name](#input_tenant_name) | The name of the tenant you want to create | `string` | n/a | yes |
-| <a name="input_tenant_prefix"></a> [tenant_prefix](#input_tenant_prefix) | The prefix to use for the tenant in vault (this will prefix mount points, policies, etc..) | `string` | n/a | yes |
+| <a name="input_additional_roles"></a> [additional_roles](#input_additional_roles) | A map of additional role names, with the path to the associated policy file to add for this tenant.<br>    A separate approle auth method is created for this tenant (mounted at auth/<prefix>-approle) including all the roles declared in this variable.<br>    The variable should look like:<br>    additional_roles = {<br>      devs = {<br>        policy_file = "/some/path/to/policy.hcl"<br>      }<br>      admins = {...}<br>    } | <pre>map(object({<br>    policy_file = string<br>  }))</pre> | `{}` | no |
+| <a name="input_name"></a> [name](#input_name) | The name of the tenant you want to create | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input_prefix) | The prefix to use for the tenant in vault (this will prefix mount points, policies, etc..) | `string` | n/a | yes |
+| <a name="input_root_policy_file"></a> [root_policy_file](#input_root_policy_file) | The path to the admin policy file for this tenant | `string` | `null` | no |
 
 ### Outputs
 
 | Name | Description |
 |------|-------------|
+| <a name="output_approle_mount"></a> [approle_mount](#output_approle_mount) | The approle mount for the tenant |
 | <a name="output_extra_role_policies"></a> [extra_role_policies](#output_extra_role_policies) | The tenant extra role policy names |
 | <a name="output_extra_roles"></a> [extra_roles](#output_extra_roles) | The tenant extra approle roles |
-| <a name="output_tenant_admin_policy"></a> [tenant_admin_policy](#output_tenant_admin_policy) | The tenant admin policy name |
-| <a name="output_tenant_admin_role"></a> [tenant_admin_role](#output_tenant_admin_role) | The tenant admin approle role |
+| <a name="output_root_policy"></a> [root_policy](#output_root_policy) | The tenant root policy name |
+| <a name="output_root_role"></a> [root_role](#output_root_role) | The tenant root approle role |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
