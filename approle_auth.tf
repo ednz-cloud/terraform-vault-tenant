@@ -7,15 +7,6 @@ resource "vault_auth_backend" "approle" {
   }
 }
 
-resource "vault_identity_group" "this" {
-  name = var.tenant_name
-  type = "internal"
-  metadata = {
-    tenant = var.tenant_name
-    prefix = var.tenant_prefix
-  }
-}
-
 resource "vault_identity_group_alias" "this" {
   name           = var.tenant_name
   mount_accessor = vault_auth_backend.approle.accessor
