@@ -38,8 +38,7 @@ No modules.
 | [vault_approle_auth_backend_role_secret_id.tenant_admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/approle_auth_backend_role_secret_id) | resource |
 | [vault_auth_backend.approle](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/auth_backend) | resource |
 | [vault_identity_entity.extra_roles](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity) | resource |
-| [vault_identity_entity.tenant_admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_entity) | resource |
-| [vault_identity_group.tenant_group](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_group) | resource |
+| [vault_identity_group.this](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_group) | resource |
 | [vault_identity_group_alias.this](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_group_alias) | resource |
 | [vault_policy.extra_policies](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
 | [vault_policy.tenant_admin](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |

@@ -12,19 +12,6 @@ resource "vault_approle_auth_backend_role_secret_id" "tenant_admin" {
   secret_id = random_uuid.tenant_admin_secret_id.result
 }
 
-resource "vault_identity_group" "tenant_group" {
-  name = var.tenant_name
-  type = "internal"
-}
-
-resource "vault_identity_entity" "tenant_admin" {
-  name = "${var.tenant_prefix}-admin"
-  metadata = {
-    tenant = var.tenant_name
-    prefix = var.tenant_prefix
-  }
-}
-
 resource "vault_policy" "tenant_admin" {
   name   = "${var.tenant_name}-admin"
   policy = var.tenant_admin_policy_file == null ? templatefile("${path.module}/policies/tenant-admins.policy.hcl", { tenant_prefix = var.tenant_prefix }) : file(var.tenant_admin_policy_file)
