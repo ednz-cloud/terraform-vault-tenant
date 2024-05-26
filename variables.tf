@@ -2,7 +2,7 @@ variable "name" {
   type        = string
   description = "The name of the tenant you want to create"
   validation {
-    condition     = can(regex("^[-a-zA-Z0-9_]*$", var.tenant_name))
+    condition     = can(regex("^[-a-zA-Z0-9_]*$", var.name))
     error_message = "The tenant name must only contain alphanumeric characters, dashes, and underscores."
   }
 }
