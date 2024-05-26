@@ -9,7 +9,11 @@ path "sys/mounts/${tenant_prefix}/*" {
 path "sys/remount" {
   capabilities = ["update"]
   allowed_parameters = {
-    from = ["${tenant_prefix}/*"]
-    to = ["${tenant_prefix}/*"]
+    "from" = ["${tenant_prefix}/*"]
+    "to" = ["${tenant_prefix}/*"]
   }
+}
+
+path "sys/remount/status/*" {
+  capabilities = ["read"]
 }
