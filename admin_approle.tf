@@ -1,11 +1,7 @@
-locals {
-  tenant_admin_policies = ["default", "${var.tenant_name}-admin"]
-}
-
 resource "vault_approle_auth_backend_role" "tenant_admin" {
   backend        = var.global_approle_mount
   role_name      = "${var.tenant_name}-admin"
-  token_policies = local.tenant_admin_policies
+  token_policies = ["default", vault_policy.tenant_admin.name]
 }
 
 resource "random_uuid" "tenant_admin_secret_id" {}
