@@ -1,12 +1,3 @@
-resource "vault_auth_backend" "approle" {
-  type = "approle"
-  path = "${var.tenant_prefix}-approle"
-  tune {
-    default_lease_ttl = "3600s"
-    max_lease_ttl     = "14400s"
-  }
-}
-
 resource "vault_approle_auth_backend_role" "extra_roles" {
   for_each = var.tenant_additional_roles
 

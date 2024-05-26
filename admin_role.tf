@@ -1,5 +1,5 @@
 resource "vault_approle_auth_backend_role" "tenant_admin" {
-  backend        = var.global_approle_mount
+  backend        = vault_auth_backend.approle.path
   role_name      = "${var.tenant_name}-admin"
   token_policies = ["default", vault_policy.tenant_admin.name]
 }
@@ -7,9 +7,14 @@ resource "vault_approle_auth_backend_role" "tenant_admin" {
 resource "random_uuid" "tenant_admin_secret_id" {}
 
 resource "vault_approle_auth_backend_role_secret_id" "tenant_admin" {
-  backend   = var.global_approle_mount
+  backend   = vault_auth_backend.approle.path
   role_name = vault_approle_auth_backend_role.tenant_admin.role_name
   secret_id = random_uuid.tenant_admin_secret_id.result
+}
+
+resource "vault_identity_group" "tenant_group" {
+  name = var.tenant_name
+  type = "internal"
 }
 
 resource "vault_identity_entity" "tenant_admin" {
