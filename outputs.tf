@@ -27,17 +27,17 @@ output "root_policy" {
 
 output "extra_roles" {
   value = {
-    for key, role in vault_approle_auth_backend_role.extra_roles :
+    for key, role in vault_approle_auth_backend_role.extra :
     key => {
       role_id   = role.role_name
-      secret_id = vault_approle_auth_backend_role_secret_id.extra_roles[key].secret_id
+      secret_id = vault_approle_auth_backend_role_secret_id.extra[key].secret_id
     }
   }
   sensitive   = true
   description = "The tenant extra approle roles"
   depends_on = [
-    vault_approle_auth_backend_role.extra_roles,
-    vault_approle_auth_backend_role_secret_id.extra_roles
+    vault_approle_auth_backend_role.extra,
+    vault_approle_auth_backend_role_secret_id.extra
   ]
 }
 
