@@ -43,10 +43,10 @@ output "extra_roles" {
 
 output "extra_role_policies" {
   value = {
-    for key, policy in vault_policy.extra_policies :
+    for key, policy in vault_policy.extra :
     key => policy.name
   }
   sensitive   = false
   description = "The tenant extra role policy names"
-  depends_on  = [vault_policy.extra_policies]
+  depends_on  = [vault_policy.extra]
 }

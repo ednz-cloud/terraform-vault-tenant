@@ -1,7 +1,7 @@
 resource "vault_approle_auth_backend_role" "root" {
   backend        = vault_auth_backend.approle.path
-  role_name      = "${var.name}-admin"
-  token_policies = ["default", vault_policy.tenant_admin.name]
+  role_name      = "${var.name}-root"
+  token_policies = ["default", vault_policy.root.name]
 }
 
 resource "random_uuid" "root_secret_id" {}
