@@ -24,22 +24,6 @@ locals {
   root_policy_rules = merge(local.root_policy_default_rules, var.root_policy_extra_rules)
 }
 
-# data "vault_policy_document" "root" {
-#   dynamic "rule" {
-#     for_each = local.root_policy_rules
-#     content {
-#       path                = each.value.path
-#       capabilities        = each.value.capabilities
-#       description         = try(each.value.description, null)
-#       required_parameters = try(each.value.required_parameters, null)
-#       allowed_parameter   = try(each.value.allowed_parameter, null)
-#       denied_parameter    = try(each.value.denied_parameter, null)
-#       min_wrapping_ttl    = try(each.value.min_wrapping_ttl, null)
-#       max_wrapping_ttl    = try(each.value.max_wrapping_ttl, null)
-#     }
-#   }
-# }
-
 data "vault_policy_document" "root" {
   dynamic "rule" {
     for_each = local.root_policy_rules
@@ -50,14 +34,6 @@ data "vault_policy_document" "root" {
       min_wrapping_ttl    = try(rule.value.min_wrapping_ttl, null)
       max_wrapping_ttl    = try(rule.value.max_wrapping_ttl, null)
       required_parameters = try(rule.value.required_parameters, null)
-
-      # dynamic "required_parameters" {
-      #   for_each = rule.value.required_parameters != null ? rule.value.required_parameters : {}
-      #   content {
-      #     key = required_parameters.key
-      #     value = required_parameters.value
-      #   }
-      # }
 
       dynamic "allowed_parameter" {
         for_each = try(rule.value.allowed_parameter, {}) != {} ? rule.value.allowed_parameter : {}
