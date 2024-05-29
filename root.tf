@@ -36,7 +36,7 @@ data "vault_policy_document" "root" {
       required_parameters = try(rule.value.required_parameters, null)
 
       dynamic "allowed_parameter" {
-        for_each = try(rule.value.allowed_parameter, {}) != {} ? rule.value.allowed_parameter : {}
+        for_each = try(rule.value.allowed_parameter, null) != null ? rule.value.allowed_parameter : {}
         content {
           key   = allowed_parameter.key
           value = allowed_parameter.value
@@ -44,7 +44,7 @@ data "vault_policy_document" "root" {
       }
 
       dynamic "denied_parameter" {
-        for_each = try(rule.value.denied_parameter, {}) != {} ? rule.value.denied_parameter : {}
+        for_each = try(rule.value.denied_parameter, null) != null ? rule.value.denied_parameter : {}
         content {
           key   = denied_parameter.key
           value = denied_parameter.value

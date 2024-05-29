@@ -39,6 +39,6 @@ variable "root_policy_extra_rules" {
       max_wrapping_ttl    = optional(number)
     })
   )
-  description = "A map of additional policies to attach to the root policy. These are merged with the default policies for the root role so that oyu can customize it to your needs"
+  description = "A map of additional policies to attach to the root policy. These are merged with the default policies for the root role so that you can customize it to your needs"
   default     = {}
 }
