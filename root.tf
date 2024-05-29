@@ -1,3 +1,50 @@
+locals {
+  root_policy_default_rules = {
+    tenant_prefix_rw = {
+      path         = "${var.prefix}/*"
+      capabilities = ["create", "update", "read", "delete", "list"]
+    }
+    tenant_prefix_mount = {
+      path         = "sys/mounts/${var.prefix}/*"
+      capabilities = ["create", "update", "read", "delete", "list"]
+    }
+    tenant_prefix_remount = {
+      path         = "sys/remount"
+      capabilities = ["update", "sudo"]
+      allowed_parameters = {
+        "from" = ["${var.prefix}/*"]
+        "to"   = ["${var.prefix}/*"]
+      }
+    }
+    tenant_prefix_remount_status = {
+      path         = "sys/remount/status/*"
+      capabilities = ["read"]
+    }
+  }
+  root_policy_rules = merge(local.root_policy_default_rules, var.root_policy_extra_rules)
+}
+
+data "vault_policy_document" "root" {
+  dynamic "rule" {
+    for_each = local.root_policy_rules
+    content {
+      path                = each.value.path
+      capabilities        = each.value.capabilities
+      description         = try(each.value.description, null)
+      required_parameters = try(each.value.required_parameters, null)
+      allowed_parameter   = try(each.value.allowed_parameter, null)
+      denied_parameter    = try(each.value.denied_parameter, null)
+      min_wrapping_ttl    = try(each.value.min_wrapping_ttl, null)
+      max_wrapping_ttl    = try(each.value.max_wrapping_ttl, null)
+    }
+  }
+}
+
+resource "vault_policy" "root" {
+  name   = "${var.name}-root"
+  policy = data.vault_policy_document.root.hcl
+}
+
 resource "vault_approle_auth_backend_role" "root" {
   backend        = vault_auth_backend.approle.path
   role_name      = "${var.name}-root"
@@ -10,11 +57,6 @@ resource "vault_approle_auth_backend_role_secret_id" "root" {
   backend   = vault_auth_backend.approle.path
   role_name = vault_approle_auth_backend_role.root.role_name
   secret_id = random_uuid.root_secret_id.result
-}
-
-resource "vault_policy" "root" {
-  name   = "${var.name}-root"
-  policy = var.root_policy_file == null ? templatefile("${path.module}/policies/root.policy.hcl", { tenant_prefix = var.prefix }) : file(var.root_policy_file)
 }
 
 resource "vault_identity_entity" "root" {
