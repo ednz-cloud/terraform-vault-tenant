@@ -32,7 +32,7 @@ variable "root_policy_extra_rules" {
       path                = string
       capabilities        = list(string)
       description         = optional(string)
-      required_parameters = optional(map(list(any)))
+      required_parameters = optional(list(string))
       allowed_parameter   = optional(map(list(any)))
       denied_parameter    = optional(map(list(any)))
       min_wrapping_ttl    = optional(number)
