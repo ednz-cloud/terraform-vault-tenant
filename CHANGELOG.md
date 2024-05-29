@@ -1,3 +1,20 @@
+## v0.2.0 (2024-05-29)
+
+### Feat
+
+- pass extra roles as key value pairs, required the full policy as value
+- allow passing extra policies to the tenant root role, start migrating away from old 'extra roles' approach
+
+### Fix
+
+- required_parameters type in root_policy_extra_rules
+- required_parameters type in root_policy_extra_rules
+- evaluate parameters against null to avoid failing when null values are injected in place of optionals
+- typo in default root permissions
+- use try on dynamic block to not raise errors on non-existent attributes
+- use rule context for block scoped values
+- adjust code for root policy document to generate blocks instead of map of lists
+
 ## v0.1.0 (2024-05-28)
 
 ### Feat
