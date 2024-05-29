@@ -49,7 +49,7 @@ data "vault_policy_document" "root" {
       description         = try(rule.value.description, null)
       min_wrapping_ttl    = try(rule.value.min_wrapping_ttl, null)
       max_wrapping_ttl    = try(rule.value.max_wrapping_ttl, null)
-      required_parameters = try(each.value.required_parameters, null)
+      required_parameters = try(rule.value.required_parameters, null)
 
       # dynamic "required_parameters" {
       #   for_each = rule.value.required_parameters != null ? rule.value.required_parameters : {}
