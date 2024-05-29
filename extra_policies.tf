@@ -20,7 +20,7 @@ resource "vault_policy" "extra" {
   for_each = var.additional_roles
 
   name   = "${var.prefix}-${each.key}"
-  policy = file(each.value.policy_file)
+  policy = each.value
 }
 
 resource "vault_identity_entity" "extra" {

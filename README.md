@@ -44,15 +44,16 @@ No modules.
 | [vault_identity_group.this](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/identity_group) | resource |
 | [vault_policy.extra](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
 | [vault_policy.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/policy) | resource |
+| [vault_policy_document.root](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/data-sources/policy_document) | data source |
 
 ### Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_additional_roles"></a> [additional_roles](#input_additional_roles) | A map of additional role names, with the path to the associated policy file to add for this tenant.<br>    A separate approle auth method is created for this tenant (mounted at auth/<prefix>-approle) including all the roles declared in this variable.<br>    The variable should look like:<br>    additional_roles = {<br>      devs = {<br>        policy_file = "/some/path/to/policy.hcl"<br>      }<br>      admins = {...}<br>    } | <pre>map(object({<br>    policy_file = string<br>  }))</pre> | `{}` | no |
+| <a name="input_additional_roles"></a> [additional_roles](#input_additional_roles) | A map of additional role names, with the path to the associated policy file to add for this tenant.<br>    A separate approle auth method is created for this tenant (mounted at auth/<prefix>-approle) including all the roles declared in this variable.<br>    The variable should look like:<br>    additional_roles = {<br>      devs = file("path/to/policy.hcl")<br>      admins = data.vault_policy_document.admins.hcl<br>    } | `map(string)` | `{}` | no |
 | <a name="input_name"></a> [name](#input_name) | The name of the tenant you want to create | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input_prefix) | The prefix to use for the tenant in vault (this will prefix mount points, policies, etc..) | `string` | n/a | yes |
-| <a name="input_root_policy_file"></a> [root_policy_file](#input_root_policy_file) | The path to the admin policy file for this tenant | `string` | `null` | no |
+| <a name="input_root_policy_extra_rules"></a> [root_policy_extra_rules](#input_root_policy_extra_rules) | A map of additional policies to attach to the root policy. These are merged with the default policies for the root role so that oyu can customize it to your needs | <pre>map(<br>    object({<br>      path                = string<br>      capabilities        = list(string)<br>      description         = optional(string)<br>      required_parameters = optional(map(list(any)))<br>      allowed_parameter   = optional(map(list(any)))<br>      denied_parameter    = optional(map(list(any)))<br>      min_wrapping_ttl    = optional(number)<br>      max_wrapping_ttl    = optional(number)<br>    })<br>  )</pre> | `{}` | no |
 
 ### Outputs
 
