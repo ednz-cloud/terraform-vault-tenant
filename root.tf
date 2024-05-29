@@ -11,7 +11,7 @@ locals {
     tenant_prefix_remount = {
       path         = "sys/remount"
       capabilities = ["update", "sudo"]
-      allowed_parameters = {
+      allowed_parameter = {
         "from" = ["${var.prefix}/*"]
         "to"   = ["${var.prefix}/*"]
       }
